@@ -1,0 +1,41 @@
+lass Student {
+    String name;
+    int rollNumber;
+    double marks;
+
+    Student(String name, int rollNumber, double marks) {
+        this.name = name;
+        this.rollNumber = rollNumber;
+        this.marks = marks;
+    }
+
+    double calculateAverageMarks() {
+        return marks / 5; 
+    }
+
+    void displayStudentDetails() {
+        System.out.println("Name: " + name);
+        System.out.println("Roll Number: " + rollNumber);
+        System.out.println("Marks: " + marks);
+        System.out.println("Average Marks: " + calculateAverageMarks());
+        System.out.println("Result: " + (calculateAverageMarks() >= 40 ? "Passed" : "Failed"));
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student[] students = new Student[] {
+            new Student("Ali", 1, 350),
+            new Student("Sara", 2, 400),
+            new Student("Noor", 3, 300)
+        };
+
+        double classAverage = 0;
+        for (Student student : students) {
+            student.displayStudentDetails();
+            classAverage += student.calculateAverageMarks();
+        }
+
+        System.out.println("Class Average: " + classAverage / students.length);
+    }
+}

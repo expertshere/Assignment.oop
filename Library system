@@ -1,0 +1,94 @@
+
+
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+class Book {
+    String title;
+    String author;
+    String ISBN;
+    boolean isAvailable;
+    String borrower;
+    LocalDate borrowedDate;
+    LocalDate returnDate;
+
+    Book(String title, String author, String ISBN) {
+        this.title = title;
+        this.author = author;
+        this.ISBN = ISBN;
+        this.isAvailable = true;
+    }
+}
+
+class Library {
+    List<Book> books;
+
+    Library() {
+        this.books = new ArrayList<>();
+    }
+
+    void addBook(Book book) {
+        books.add(book);
+    }
+
+    Book searchBookByTitle(String title) {
+        for (Book book : books) {
+            if (book.title.equals(title)) {
+                return book;
+            }
+        }
+        return null;
+    }
+
+    void checkOutBook(Book book, String borrower) {
+        if (book.isAvailable) {
+            book.isAvailable = false;
+            book.borrower = borrower;
+            book.borrowedDate = LocalDate.now();
+            System.out.println("Book checked out successfully.");
+        } else {
+            System.out.println("Book is not available.");
+        }
+    }
+
+    void returnBook(Book book) {
+        if (!book.isAvailable) {
+            book.isAvailable = true;
+            book.returnDate = LocalDate.now();
+            System.out.println("Book returned successfully.");
+        } else {
+            System.out.println("Book is already available.");
+        }
+    }
+
+    void printLendingHistory(Book book) {
+        System.out.println("Borrower: " + book.borrower);
+        System.out.println("Borrowed Date: " + book.borrowedDate);
+        System.out.println("Return Date: " + book.returnDate);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Library library = new Library();
+
+        Book book1 = new Book("Book Title 1", "Author 1", "ISBN1");
+        Book book2 = new Book("Book Title 2", "Author 2", "ISBN2");
+
+        library.addBook(book1);
+        library.addBook(book2);
+
+        Book searchedBook = library.searchBookByTitle("Book Title 1");
+        if (searchedBook != null) {
+            System.out.println("Book found.");
+            library.checkOutBook(searchedBook, "Borrower 1");
+            library.printLendingHistory(searchedBook);
+            library.returnBook(searchedBook);
+        } else {
+            System.out.println("Book not found.");
+        }
+    }
+}
+
